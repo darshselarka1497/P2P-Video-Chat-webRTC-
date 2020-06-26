@@ -34,6 +34,23 @@ navigator.mediaDevices.getUserMedia({video:true, audio:true}).then(function (str
     })
 
     //action when webRTC disconnects
-    
+    swarm.on('disconnect', function(peer,id){
+        if(users[id]){
+            users[id].element.parentNode.removeChild(users[id].element)
+            delete users[id]
+        }
+    })
 
-})
+    setInterval(function(){
+        console.log("Intervall call");
+        u1.update()
+
+        const u1string = JSON.stringify(u1)
+        swarm.peers.forEach(function (peer){
+            peer.send(u1string)
+        })
+    },100)
+    })
+
+    // creating a webRTC swarm and map it to signalhub
+    
