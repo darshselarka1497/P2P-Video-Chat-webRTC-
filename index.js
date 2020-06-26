@@ -52,5 +52,17 @@ navigator.mediaDevices.getUserMedia({video:true, audio:true}).then(function (str
     },100)
     })
 
-    // creating a webRTC swarm and map it to signalhub
+    //adding the stream to the webRTC swarm to access the data in the peer network
+    const swarm = createSwarm(hub,{
+        stream: stream
+    })
+
+    //adding the stream to the video element
+    Player.prototype.addStream = function(stream){
+        this.element.srcObject=stream
+        this.element.play()
+    }
+
+
+
     
